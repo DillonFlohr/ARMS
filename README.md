@@ -8,6 +8,6 @@ The first environment ARMS will target is the Open Dynamics Engine. https://bitb
 
 ## Contact
 
-Project Lead: Dr. Anthony J. Clark [anthonyjclark](https://github.com/anthonyjclark)
+Project Lead: Dr. Anthony J. Clark ([anthonyjclark](https://github.com/anthonyjclark))
 
-Lead Developer: Dillon Flohr [dillonflohr](https://github.com/DillonFlohr)
+Lead Developer: Dillon Flohr ([dillonflohr](https://github.com/DillonFlohr))
