@@ -2,6 +2,6 @@ To use the interpreter:
 
 Place a ARMS file into 'input'
 
-Run the file and give the desired file name
+Run ARMS_Interpreter and give the desired file name
 
 Find your interpreted file in 'output'
