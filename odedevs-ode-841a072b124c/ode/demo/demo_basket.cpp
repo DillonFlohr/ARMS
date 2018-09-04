@@ -31,131 +31,41 @@
 
 #define RADIUS 0.20
 
- //static int levels = 5;
- //static int ncards = 0;
-
 static dSpaceID space;
 static dWorldID world;
 static dJointGroupID contactgroup;
 
-static dBodyID sphbody;
-static dGeomID sphgeom;
+static dBodyID sphbody0;
+static dGeomID sphgeom0;
 
-//struct Card {
-//    dBodyID body;
-//    dGeomID geom;
-//    static const dReal sides[3];
-//
-//    Card()
-//    {
-//        body = dBodyCreate(world);
-//        geom = dCreateBox(space, sides[0], sides[1], sides[2]);
-//        dGeomSetBody(geom, body);
-//        dGeomSetData(geom, this);
-//        dMass mass;
-//        mass.setBox(1, sides[0], sides[1], sides[2]);
-//        dBodySetMass(body, &mass);
-//    }
-//
-//    ~Card()
-//    {
-//        dBodyDestroy(body);
-//        dGeomDestroy(geom);
-//    }
-//    
-//    void draw() const
-//    {
-//        dsDrawBox(dBodyGetPosition(body),
-//                  dBodyGetRotation(body), sides);
-//    }
-//};
-//static const dReal cwidth=.5, cthikness=.02, clength=1;
-//const dReal Card::sides[3] = { cwidth, cthikness, clength };
-
-
-//std::vector<Card*> cards;
-//
-//int getncards(int levels)
-//{
-//    return (3*levels*levels + levels) / 2;
-//}
-//
-//void place_cards()
-//{
-//    ncards = getncards(levels);
-//    // destroy removed cards (if any)
-//    int oldcards = cards.size();
-//    for (int i=ncards; i<oldcards; ++i)
-//        delete cards[i];
-//    cards.resize(ncards);
-//    // construct new cards (if any)
-//    for (int i=oldcards; i<ncards; ++i)
-//        cards[i] = new Card;
-//    
-//    // for each level
-//    int c = 0;
-//    dMatrix3 right, left, hrot;
-//    dReal angle = 20*M_PI/180.;
-//    dRFromAxisAndAngle(right, 1, 0, 0, -angle);
-//    dRFromAxisAndAngle(left, 1, 0, 0, angle);
-//
-//    dRFromAxisAndAngle(hrot, 1, 0, 0, 91*M_PI/180.);
-//    
-//    dReal eps = 0.05;
-//    dReal vstep = cos(angle)*clength + eps;
-//    dReal hstep = sin(angle)*clength + eps;
-//    
-//    for (int lvl=0; lvl<levels; ++lvl) {
-//        // there are 3*(levels-lvl)-1 cards in each level, except last
-//        int n = (levels-lvl);
-//        dReal height = (lvl)*vstep + vstep/2;
-//        // inclined cards
-//        for (int i=0; i<2*n; ++i, ++c) {
-//            dBodySetPosition(cards[c]->body, 
-//                    0,
-//                    -n*hstep + hstep*i,
-//                    height
-//                    );
-//            if (i%2)
-//                dBodySetRotation(cards[c]->body, left);
-//            else
-//                dBodySetRotation(cards[c]->body, right);
-//        }
-//        
-//        if (n==1) // top of the house
-//            break;
-//        
-//        // horizontal cards
-//        for (int i=0; i<n-1; ++i, ++c) {
-//            dBodySetPosition(cards[c]->body,
-//                    0,
-//                    -(n-1 - (clength-hstep)/2)*hstep + 2*hstep*i,
-//                    height + vstep/2);
-//            dBodySetRotation(cards[c]->body, hrot);
-//        }
-//    }
-//    
-//}
-
+static dBodyID sphbody1;
+static dGeomID sphgeom1;
 
 void start()
 {
-	/*puts("Controls:");
-	puts("   SPACE - reposition cards");
-	puts("   -     - one less level");
-	puts("   =     - one more level");*/
+	puts("Controls:");
+	puts("   SPACE - reset ball(s)");
 }
 
 static void reset_ball(void)
 {
-	float sx = 0.0f, sy = 0.00f, sz = 5.15;
+	float sx0 = 0.0f, sy0 = 0.00f, sz0 = 5.15;
+	
+	dQuaternion q0;
+	dQSetIdentity(q0);
+	dBodySetPosition(sphbody0, sx0, sy0, sz0);
+	dBodySetQuaternion(sphbody0, q0);
+	dBodySetLinearVel(sphbody0, 0, 0, 0);
+	dBodySetAngularVel(sphbody0, 0, 0, 0);
 
-	dQuaternion q;
-	dQSetIdentity(q);
-	dBodySetPosition(sphbody, sx, sy, sz);
-	dBodySetQuaternion(sphbody, q);
-	dBodySetLinearVel(sphbody, 0, 0, 0);
-	dBodySetAngularVel(sphbody, 0, 0, 0);
+	float sx1 = 0.05f, sy1 = 0.01f, sz1 = 7.15;
+
+	dQuaternion q1;
+	dQSetIdentity(q1);
+	dBodySetPosition(sphbody1, sx1, sy1, sz1);
+	dBodySetQuaternion(sphbody1, q1);
+	dBodySetLinearVel(sphbody1, 0, 0, 0);
+	dBodySetAngularVel(sphbody1, 0, 0, 0);
 }
 
 static void nearCallback(void *, dGeomID o1, dGeomID o2)
@@ -175,12 +85,11 @@ static void nearCallback(void *, dGeomID o1, dGeomID o2)
 		contact[i].surface.mode = dContactSoftERP | dContactSoftCFM | dContactApprox1 | dContactSlip1 | dContactSlip2;
 		contact[i].surface.mu = 50.0; // was: dInfinity
 		contact[i].surface.soft_erp = 0.96;
-		contact[i].surface.soft_cfm = 0.04;
+		contact[i].surface.soft_cfm = 2.00;
 		dJointID c = dJointCreateContact(world, contactgroup, contact + i);
 		dJointAttach(c, b1, b2);
 	}
 }
-
 
 void simLoop(int pause)
 {
@@ -191,42 +100,37 @@ void simLoop(int pause)
 	}
 
 	dsSetColor(1, 0, 1);
-	const dReal *SPos = dBodyGetPosition(sphbody);
-	const dReal *SRot = dBodyGetRotation(sphbody);
-	float spos[3] = { SPos[0], SPos[1], SPos[2] };
-	float srot[12] = { SRot[0], SRot[1], SRot[2], SRot[3], SRot[4], SRot[5], SRot[6], SRot[7], SRot[8], SRot[9], SRot[10], SRot[11] };
+	const dReal *SPos0 = dBodyGetPosition(sphbody0);
+	const dReal *SRot0 = dBodyGetRotation(sphbody0);
+	float spos0[3] = { SPos0[0], SPos0[1], SPos0[2] };
+	float srot0[12] = { SRot0[0], SRot0[1], SRot0[2], SRot0[3], SRot0[4], SRot0[5], SRot0[6], SRot0[7], SRot0[8], SRot0[9], SRot0[10], SRot0[11] };
 	dsDrawSphere
 	(
-		spos,
-		srot,
+		spos0,
+		srot0,
 		RADIUS
 	);
 
-	/*dsSetColor (1,1,0);
-	for (int i=0; i<ncards; ++i) {
-		dsSetColor (1, dReal(i)/ncards, 0);
-		cards[i]->draw();
-	}*/
-
+	dsSetColor(1, 0, 0);
+	const dReal *SPos1 = dBodyGetPosition(sphbody1);
+	const dReal *SRot1 = dBodyGetRotation(sphbody1);
+	float spos1[3] = { SPos1[0], SPos1[1], SPos1[2] };
+	float srot1[12] = { SRot1[0], SRot1[1], SRot1[2], SRot1[3], SRot1[4], SRot1[5], SRot1[6], SRot1[7], SRot1[8], SRot1[9], SRot1[10], SRot1[11] };
+	dsDrawSphere
+	(
+		spos1,
+		srot1,
+		RADIUS
+	);
 }
 
 void command(int c)
 {
-	/*switch (c) {
-		case '=':
-			levels++;
-			place_cards();
-			break;
-		case '-':
-			levels--;
-			if (levels <= 0)
-				levels++;
-			place_cards();
-			break;
+	switch (c) {
 		case ' ':
-			place_cards();
+			reset_ball();
 			break;
-	}*/
+	}
 }
 
 int main(int argc, char **argv)
@@ -244,32 +148,36 @@ int main(int argc, char **argv)
 	fn.stop = 0;
 	fn.path_to_textures = DRAWSTUFF_TEXTURE_PATH;
 
-
+	//Create world
 	world = dWorldCreate();
 	dWorldSetGravity(world, 0, 0, -0.98);
 	dWorldSetQuickStepNumIterations(world, 50); // <-- increase for more stability
 
+	//Create 'ground'
 	space = dSimpleSpaceCreate(0);
 	contactgroup = dJointGroupCreate(0);
 	dGeomID ground = dCreatePlane(space, 0, 0, 1, 0);
 
-	//float sx=0.0, sy=3.40, sz=6.80;
-	//(void)world_normals; // get rid of compiler warning
-	sphbody = dBodyCreate(world);
+	//Create Sphere0
+	sphbody0 = dBodyCreate(world);
 	dMassSetSphere(&m, 1, RADIUS);
-	dBodySetMass(sphbody, &m);
-	sphgeom = dCreateSphere(0, RADIUS);
-	dGeomSetBody(sphgeom, sphbody);
-	reset_ball();
-	dSpaceAdd(space, sphgeom);
+	dBodySetMass(sphbody0, &m);
+	sphgeom0 = dCreateSphere(0, RADIUS);
+	dGeomSetBody(sphgeom0, sphbody0);
+	dSpaceAdd(space, sphgeom0);
 
-	//place_cards();
+	//Create Sphere1
+	sphbody1 = dBodyCreate(world);
+	dMassSetSphere(&m, 1, RADIUS);
+	dBodySetMass(sphbody1, &m);
+	sphgeom1 = dCreateSphere(0, RADIUS);
+	dGeomSetBody(sphgeom1, sphbody1);
+	dSpaceAdd(space, sphgeom1);
+
+	reset_ball();
 
 	// run simulation
 	dsSimulationLoop(argc, argv, 640, 480, &fn);
-
-	//levels = 0;
-	//place_cards();
 
 	dJointGroupDestroy(contactgroup);
 	dWorldDestroy(world);
