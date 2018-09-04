@@ -50,7 +50,7 @@ void start()
 static void reset_ball(void)
 {
 	float sx0 = 0.0f, sy0 = 0.00f, sz0 = 5.15;
-	
+
 	dQuaternion q0;
 	dQSetIdentity(q0);
 	dBodySetPosition(sphbody0, sx0, sy0, sz0);
@@ -127,9 +127,9 @@ void simLoop(int pause)
 void command(int c)
 {
 	switch (c) {
-		case ' ':
-			reset_ball();
-			break;
+	case ' ':
+		reset_ball();
+		break;
 	}
 }
 
