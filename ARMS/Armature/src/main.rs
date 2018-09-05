@@ -22,7 +22,8 @@ fn create(file_contents: String, file_name: &String) {
 }
 
 fn get_file_contents(file_path: &String) -> String {
-    let mut file = File::open(file_path).expect("Could not open file");
+    println!("{}", &file_path);
+    let mut file = File::open(file_path.trim()).expect("Could not open file");
     let mut file_contents = String::new();
     file.read_to_string(&mut file_contents).expect("Could not read file into string");
 
