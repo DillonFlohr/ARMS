@@ -1,7 +1,3 @@
 To use the interpreter:
 
-Place a ARMS file into 'input'
-
-Run ARMS_Interpreter and give the desired file name
-
-Find your interpreted file in 'output'
+Run './Armature' with or without an argument that is the path to the file to be interpreted. If no argument is given you will be prompted for a file path.
