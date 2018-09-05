@@ -1,5 +1,5 @@
 [package]
-name = "ARMS_Interpreter"
+name = "Armature"
 version = "0.1.0"
 authors = ["Dillon <dillonflohr@gmail.com>"]
 
