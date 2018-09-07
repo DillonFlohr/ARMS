@@ -1,0 +1,11 @@
+[[spheres]]
+name = "ball1"
+radius = 0.5
+color = [1.0, 0.0, 0.0]
+position = [0.2, 0.0, 5.0]
+
+[[spheres]]
+name = "ball2"
+radius = 0.5
+color = [0.0, 0.0, 1.0]
+position = [0.0, 0.0, 8.0]
