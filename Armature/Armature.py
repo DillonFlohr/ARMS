@@ -16,7 +16,7 @@ def body_variables():
 #   static dGeomID sphgeom1;
 
 
-    for body in arms['spheres']:
+    for body in arms['sphere']:
         new_body = f"""//Gernerated by Armature
 static dBodyID body_{body['name']};
 static dGeomID geom_{body['name']};
@@ -46,7 +46,7 @@ def reset_bodies():
 	# dBodySetAngularVel(sphbody1, 0, 0, 0);
     result = ""
 
-    for body in arms['spheres']:
+    for body in arms['sphere']:
         name = body['name']
         position = body['position']
 
@@ -81,7 +81,7 @@ def draw_bodies():
 
     result = ""
 
-    for body in arms['spheres']:
+    for body in arms['sphere']:
         name = body['name']
         colors = body['color']
         radius = body['radius']
@@ -117,7 +117,7 @@ def create_shapes():
 
     result = ""
 
-    for body in arms['spheres']:
+    for body in arms['sphere']:
         name = body['name']
         colors = body['color']
         radius = body['radius']
@@ -145,7 +145,8 @@ def main():
 	where_to_save = None
 
 	if len(args) == 1:
-		print("Please give one argument as the ARMS file to parse, and a second, optional, argument as the save location.\ni.e. >python Armature.py my/super/cool/file.arms where/i/want/to/save")
+		print("Please give one argument as the ARMS file to parse, and a second, optional, argument as the save location.\n\
+		i.e. >python Armature.py my/super/cool/file.arms where/i/want/to/save")
 		quit()
 
 	if len(args) > 1:
@@ -163,6 +164,11 @@ def main():
 	template_string = template_path.read_text()
 
 	if type(arms) is dict:
-		where_to_save.write_text(template_string.format(create_shapes = create_shapes(), draw_bodies = draw_bodies(), reset_bodies = reset_bodies(), body_variables = body_variables()))
+		where_to_save.write_text(template_string.format(
+		create_shapes = create_shapes(), 
+		draw_bodies = draw_bodies(), 
+		reset_bodies = reset_bodies(), 
+		body_variables = body_variables())
+		)
 
 main()
