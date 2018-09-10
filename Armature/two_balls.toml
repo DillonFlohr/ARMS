@@ -39,3 +39,7 @@ name = "ball27"
 radius = 0.3
 color = [0.0, 0.0, 1.0]
 position = [0.0, 0.0, 10.0]
+
+[[box]]
+name = "box1"
+sides = [1, 1, 1]
