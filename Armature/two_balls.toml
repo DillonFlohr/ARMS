@@ -43,3 +43,4 @@ position = [0.0, 0.0, 10.0]
 [[box]]
 name = "box1"
 sides = [1, 1, 1]
+position = [0.0, 0.0 , 21.0]
