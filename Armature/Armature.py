@@ -217,7 +217,7 @@ def main():
 	global arms
 	arms = toml.loads(file_to_parse.read_text())
 
-	template_path = Path("basic_template.txt")
+	template_path = Path("templates/basic_template.txt")
 	template_string = template_path.read_text()
 
 	if type(arms) is dict:
