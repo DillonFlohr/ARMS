@@ -1,4 +1,7 @@
-import toml
+try:
+	import toml
+except:
+	print("\n**************************************\nPlease install toml to use Armature.py\n> pip install toml\n**************************************\n")
 import sys
 from pathlib import Path
 
@@ -183,8 +186,8 @@ def create_shapes():
 	dGeomSetBody(geom_{name}, body_{name});
  	m.setBox(1, 1,1,1);
  	dBodySetMass(body_{name}, &m);
-	 dBodySetPosition(body_{name}, {position[0]}, {position[1]}, {position[2]});
-	 dSpaceAdd(space, geom_{name});
+	dBodySetPosition(body_{name}, {position[0]}, {position[1]}, {position[2]});
+	dSpaceAdd(space, geom_{name});
 """
 
 		result = f'{result}{new_code}'

@@ -7,40 +7,15 @@ position = [0.2, 0.0, 5.0]
 [[sphere]]
 name = "ball2"
 radius = 0.5
-color = [0.0, 0.0, 1.0]
-position = [0.0, 0.3, 8.0]
-
-[[sphere]]
-name = "ball23"
-radius = 0.4
-color = [0.0, 0.0, 1.0]
-position = [0.0, 0.4, 18.0]
-
-[[sphere]]
-name = "ball24"
-radius = 0.5
 color = [1.0, 1.0, 0.0]
-position = [0.0, -0.2, 2.0]
-
-[[sphere]]
-name = "ball25"
-radius = 0.6
-color = [0.0, 1.0, 1.0]
-position = [0.0, -0.1, 15.0]
-
-[[sphere]]
-name = "ball26"
-radius = 0.8
-color = [1.0, 0.0, 1.0]
-position = [0.2, 0.0, 12.0]
-
-[[sphere]]
-name = "ball27"
-radius = 0.3
-color = [0.0, 0.0, 1.0]
-position = [0.0, 0.0, 10.0]
+position = [0.2, 0.0, 9.0]
 
 [[box]]
 name = "box1"
 sides = [1, 1, 1]
-position = [0.0, 0.0 , 21.0]
+position = [0.0, 0.0 , 7.0]
+
+[[box]]
+name = "box2"
+sides = [1, 1, 1]
+position = [0.0, 0.0 , 12.0]
