@@ -52,6 +52,9 @@ static void nearCallback(void *, dGeomID o1, dGeomID o2)
 	dBodyID b1 = dGeomGetBody(o1);
 	dBodyID b2 = dGeomGetBody(o2);
 
+	//Uncomment if you don't want connected objects to hit eachother.
+	//if (b1 && b2 && dAreConnected (b1,b2)) return;
+
 	const int MAX_CONTACTS = 8;
 	dContact contact[MAX_CONTACTS];
 
@@ -115,6 +118,8 @@ int main(int argc, char **argv)
 	dGeomID ground = dCreatePlane(space, 0, 0, 1, 0);
 
 	{create_shapes}
+
+	{create_joints}
 
 	reset_bodies();
 
