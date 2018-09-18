@@ -1,7 +1,6 @@
 [[sphere]]
 name = "ball1"
 radius = 0.5
-color = [1.0, 0.0, 0.0]
 position = [1.0, -0.5, 10.0]
 
 # [[joint]]
@@ -23,25 +22,23 @@ color = [1, 0, 1]
 position = [-1.0, 0.5 , 6.0]
 
 [[joint]]
-type = "ball"
 name = "ball_joint_1"
+joint_type = "ball"
 parent = "box1"
 child = "box2"
 
 [[box]]
 name = "box2"
 sides = [1, 1, 1]
-color = [0, 1, 1]
 position = [-1.0, -0.5 , 5.0]
 
 [[box]]
 name = "box3"
 sides = [1, 1, 1]
-color = [1, 0, 1]
 position = [1.0, 0.5 , 6.0]
 
 [[joint]]
-type = "ball"
+joint_type = "ball"
 name = "ball_joint_3"
 parent = "box3"
 child = "box4"
