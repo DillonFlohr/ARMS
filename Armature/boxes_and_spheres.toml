@@ -3,17 +3,17 @@ name = "ball1"
 radius = 0.5
 position = [1.0, -0.5, 10.0]
 
-# [[joint]]
-# type = "ball"
-# name = "ball_joint_2"
-# parent = "ball1"
-# child = "ball2"
+[[joint]]
+joint_type = "ball"
+name = "ball_joint_2"
+parent = "ball1"
+child = "ball2"
 
-# [[sphere]]
-# name = "ball2"
-# radius = 0.5
-# color = [1.0, 0.0, 0.0]
-# position = [1.0, 0.5, 10.0]
+[[sphere]]
+name = "ball2"
+radius = 0.5
+color = [1.0, 0.0, 0.0]
+position = [1.0, 0.5, 10.0]
 
 [[box]]
 name = "box1"
