@@ -2,7 +2,9 @@ try:
 	import toml
 except:
 	print("\n**************************************\nPlease install toml to use Armature.py\n> pip install toml\n**************************************\n")
+	quit()
 import sys
+import pprint
 from pathlib import Path
 from enum import Enum
 
@@ -17,22 +19,30 @@ class ArmsValue(Enum):
 	joint_type = 'joint_type'
 	parent = 'parent'
 	child = 'child'
+	variables = 'variables'
 
 shapes = {
 	'box': 0,
-	'sphere': 0
+	'sphere': 0,
+	'joint': 0
 }
 
 #parsed as dictionary data from the .arms/toml file
 arms = None
 
-
 def get_shape_by_name(target_name):
+	result = None
 	for shape in shapes:
 		if shape in arms:
 			for item in arms[shape]:
 				if item[ArmsValue.name.value] == target_name:
-					return item
+					result = item
+
+	if result != None:
+		return result
+	else:
+		print(f"Shape with name {target_name} does not exist. \nExiting the program.")
+		quit()
 
 def get_optional_value(body, value):
 	if value in body:
@@ -50,7 +60,37 @@ def get_required_value(body, value):
 		else:
 			print(f"Error: Something is missing a name.")
 		quit()
-			
+
+def get_variable(target_var):
+	result = None
+	if ArmsValue.variables.value in arms:
+		variables = arms[ArmsValue.variables.value][0]
+		for var in variables:
+			if var == target_var:
+				result = variables[var]
+	
+	if result != None:
+		return result
+	else:
+		print(f"Variable name {target_var} does not exist. \nExiting the program.")
+		quit()
+
+def convert_variables():
+	global arms
+	for shape in shapes:
+		if shape in arms:
+			for items in arms[shape]:
+				for key in items:
+					if type(items[key]) == str:
+						splittedValue = items[key].split()
+						if (splittedValue[0] == "var"):
+							items[key] = get_variable(splittedValue[1])
+					if type(items[key]) == list:
+						for i in range(0, len(items[key])):
+							if type(items[key][i]) == str:
+								splittedValue = items[key][i].split()
+								if (splittedValue[0] == "var"):
+									items[key][i] = get_variable(splittedValue[1])
 
 def create_joints():
 	result = ""
@@ -97,7 +137,6 @@ static dGeomID geom_{body[ArmsValue.name.value]};
 	#boxes
 	if 'box' in arms:
 		for body in arms['box']:
-
 			sides = get_required_value(body, ArmsValue.sides.value)
 
 			new_body = f"""//Gernerated by Armature
@@ -266,11 +305,13 @@ def main():
 	template_path = Path("templates/basic_template.txt")
 	template_string = template_path.read_text()
 
+	convert_variables()
+
 	if type(arms) is dict:
 		where_to_save.write_text(template_string.format(
-		create_shapes = create_shapes(), 
-		draw_bodies = draw_bodies(), 
-		reset_bodies = reset_bodies(), 
+		create_shapes = create_shapes(),
+		draw_bodies = draw_bodies(),
+		reset_bodies = reset_bodies(),
 		body_variables = body_variables(),
 		create_joints = create_joints())
 		)
