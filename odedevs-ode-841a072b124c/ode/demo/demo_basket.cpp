@@ -24,6 +24,8 @@
 #include <ode/ode.h>
 #include <drawstuff/drawstuff.h>
 #include "texturepath.h"
+#include <unordered_map>
+using namespace std;
 
 #ifdef dDOUBLE
 #define dsDrawBox dsDrawBoxD
@@ -60,6 +62,7 @@ static dBodyID body_fdafa;
 static dGeomID geom_fdafa;
 const float sides_fdafa[3] = { 5, 5, 5 };
 
+vector<dGeomID> no_collision_group;
 
 void start()
 {
@@ -120,7 +123,8 @@ static void nearCallback(void *, dGeomID o1, dGeomID o2)
 	dBodyID b2 = dGeomGetBody(o2);
 
 	//Uncomment if you don't want connected objects to hit eachother.
-	//if (b1 && b2 && dAreConnected (b1,b2)) return;
+	if (find(no_collision_group.begin(), no_collision_group.end(), o1) != no_collision_group.end()
+		&& find(no_collision_group.begin(), no_collision_group.end(), o2) != no_collision_group.end()) return;
 
 	const int MAX_CONTACTS = 8;
 	dContact contact[MAX_CONTACTS];
@@ -320,6 +324,9 @@ int main(int argc, char **argv)
 	dJointAttach(ball_joint_3, body_box3, body_box4);
 	dJointSetBallAnchor(ball_joint_3, 1.0, 0.0, 5.5);
 
+
+	no_collision_group.push_back(geom_box3);
+	no_collision_group.push_back(geom_box4);
 
 	reset_bodies();
 

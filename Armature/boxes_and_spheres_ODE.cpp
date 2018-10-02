@@ -24,6 +24,7 @@
 #include <ode/ode.h>
 #include <drawstuff/drawstuff.h>
 #include "texturepath.h"
+#include <unordered_map>
 
 #ifdef dDOUBLE
 #define dsDrawBox dsDrawBoxD
@@ -32,6 +33,8 @@
 static dSpaceID space;
 static dWorldID world;
 static dJointGroupID contactgroup;
+
+vector<unordered_map<dBodyID, int>> no_collision_groups;
 
 //Gernerated by Armature
 static dBodyID body_ball1;
