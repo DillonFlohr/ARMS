@@ -19,7 +19,7 @@ class ArmsValue(Enum):
 	joint_type = 'joint_type'
 	parent = 'parent'
 	child = 'child'
-	variables = 'variables'
+	constants = 'constants'
 
 shapes = {
 	'box': 0,
@@ -61,36 +61,34 @@ def get_required_value(body, value):
 			print(f"Error: Something is missing a name.")
 		quit()
 
-def get_variable(target_var):
+def get_constant(target_var):
 	result = None
-	if ArmsValue.variables.value in arms:
-		variables = arms[ArmsValue.variables.value][0]
-		for var in variables:
+	if ArmsValue.constants.value in arms:
+		constants = arms[ArmsValue.constants.value][0]
+		for var in constants:
 			if var == target_var:
-				result = variables[var]
+				result = constants[var]
 	
 	if result != None:
 		return result
 	else:
-		print(f"Variable name {target_var} does not exist. \nExiting the program.")
+		print(f"Constant name {target_var} does not exist. \nExiting the program.")
 		quit()
 
-def convert_variables():
+def convert_constants():
 	global arms
 	for shape in shapes:
 		if shape in arms:
 			for items in arms[shape]:
 				for key in items:
 					if type(items[key]) == str:
-						splittedValue = items[key].split()
-						if (splittedValue[0] == "var"):
-							items[key] = get_variable(splittedValue[1])
+						if (items[key][0] == "$"):
+							items[key] = get_constant(items[key][1:])
 					if type(items[key]) == list:
 						for i in range(0, len(items[key])):
 							if type(items[key][i]) == str:
-								splittedValue = items[key][i].split()
-								if (splittedValue[0] == "var"):
-									items[key][i] = get_variable(splittedValue[1])
+								if (items[key][i][0] == "$"):
+									items[key][i] = get_constant(items[key][i][1:])
 
 def create_joints():
 	result = ""
@@ -305,7 +303,7 @@ def main():
 	template_path = Path("templates/basic_template.txt")
 	template_string = template_path.read_text()
 
-	convert_variables()
+	convert_constants()
 
 	if type(arms) is dict:
 		where_to_save.write_text(template_string.format(

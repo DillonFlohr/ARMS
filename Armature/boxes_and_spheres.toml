@@ -1,10 +1,11 @@
-[[variables]]
-test = 1
-radius = 0.7
+[[constants]]
+test = [-1.0, 0.5 , 6.0]
+radius = 1.0
+box_color = [1, 1, 0]
 
 [[sphere]]
 name = "ball1"
-radius = "var radius"
+radius = "$radius"
 position = [1.0, -0.5, 10.0]
 
 [[joint]]
@@ -15,15 +16,15 @@ child = "ball2"
 
 [[sphere]]
 name = "ball2"
-radius = "var radius"
-color = [1.0, 0.0, 0.0]
+radius = "$radius"
+color = "$box_color"
 position = [1.0, 0.5, 10.0]
 
 [[box]]
 name = "box1"
 sides = [1, 1, 1]
-color = ["var test", "var test", "var test"]
-position = [-1.0, 0.5 , 6.0]
+color = "$box_color"
+position = "$test"
 
 [[joint]]
 name = "ball_joint_1"
@@ -50,7 +51,7 @@ child = "box4"
 [[box]]
 name = "box4"
 sides = [1, 1, 1]
-color = [0, 1, 1]
+color = "$box_color"
 position = [1.0, -0.5 , 5.0]
 
 [[box]]
