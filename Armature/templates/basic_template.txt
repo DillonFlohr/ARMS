@@ -56,12 +56,11 @@ static void nearCallback(void *, dGeomID o1, dGeomID o2)
 	dBodyID b1 = dGeomGetBody(o1);
 	dBodyID b2 = dGeomGetBody(o2);
 
-	//Uncomment if you don't want connected objects to hit eachother.
-	//for (int i = 0; i < no_collision_groups.size(); i++) {
-		//auto group = no_collision_groups[i];
-		//if (group.find(o1) != group.end()
-			//&& group.find(o2) != group.end()) return;
-	//}
+	//objects in the same non_colliding_group will not collide
+	for (auto group : no_collision_groups) {{
+		if (group.find(o1) != group.end()
+			&& group.find(o2) != group.end()) return;
+	}}
 
 	const int MAX_CONTACTS = 8;
 	dContact contact[MAX_CONTACTS];

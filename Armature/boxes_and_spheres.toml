@@ -3,11 +3,9 @@ test = [-1.0, 0.5 , 6.0]
 radius = 1.0
 box_color = [1, 1, 0]
 
-[[non_colliding_group]]
-group = ["box1", "asdf"]
-
-[[non_colliding_group]]
-group = ["box3", "box4"]
+[[non_colliding_groups]]
+group1 = ["box1", "asdf", "big_box"]
+group2 = ["box3", "box4", "big_box"]
 
 [[sphere]]
 name = "ball1"
@@ -61,7 +59,7 @@ color = "$box_color"
 position = [1.0, -0.5 , 5.0]
 
 [[box]]
-name = "fdafa"
+name = "big_box"
 sides = [5, 5, 5]
 color = [1, 0, 0]
 position = [1.0, -0.5 , 20.0]
