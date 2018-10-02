@@ -3,6 +3,12 @@ test = [-1.0, 0.5 , 6.0]
 radius = 1.0
 box_color = [1, 1, 0]
 
+[[non_colliding_group]]
+group = ["box1", "asdf"]
+
+[[non_colliding_group]]
+group = ["box3", "box4"]
+
 [[sphere]]
 name = "ball1"
 radius = "$radius"

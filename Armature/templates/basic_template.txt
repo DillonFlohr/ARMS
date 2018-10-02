@@ -25,6 +25,7 @@
 #include <drawstuff/drawstuff.h>
 #include "texturepath.h"
 #include <unordered_map>
+using namespace std;
 
 #ifdef dDOUBLE
 #define dsDrawBox dsDrawBoxD
@@ -34,7 +35,7 @@ static dSpaceID space;
 static dWorldID world;
 static dJointGroupID contactgroup;
 
-vector<unordered_map<dBodyID, int>> no_collision_groups;
+vector<unordered_map<dGeomID, int>> no_collision_groups;
 
 {body_variables}
 
@@ -56,7 +57,11 @@ static void nearCallback(void *, dGeomID o1, dGeomID o2)
 	dBodyID b2 = dGeomGetBody(o2);
 
 	//Uncomment if you don't want connected objects to hit eachother.
-	//if (b1 && b2 && dAreConnected (b1,b2)) return;
+	//for (int i = 0; i < no_collision_groups.size(); i++) {
+		//auto group = no_collision_groups[i];
+		//if (group.find(o1) != group.end()
+			//&& group.find(o2) != group.end()) return;
+	//}
 
 	const int MAX_CONTACTS = 8;
 	dContact contact[MAX_CONTACTS];
@@ -123,6 +128,8 @@ int main(int argc, char **argv)
 	{create_shapes}
 
 	{create_joints}
+
+	{create_non_colliding_groups}
 
 	reset_bodies();
 

@@ -1,3 +1,4 @@
+
 /*************************************************************************
 *                                                                       *
 * Open Dynamics Engine, Copyright (C) 2001,2002 Russell L. Smith.       *
@@ -124,12 +125,13 @@ static void nearCallback(void *, dGeomID o1, dGeomID o2)
 	dBodyID b2 = dGeomGetBody(o2);
 
 	//Uncomment if you don't want connected objects to hit eachother.
-	for (auto group : no_collision_groups) {
+	for (int i = 0; i < no_collision_groups.size(); i++) {
+		auto group = no_collision_groups[i];
 		if (group.find(o1) != group.end()
 			&& group.find(o2) != group.end()) return;
 	}
 	/*if (find(no_collision_group.begin(), no_collision_group.end(), o1) != no_collision_group.end()
-		&& find(no_collision_group.begin(), no_collision_group.end(), o2) != no_collision_group.end()) return;*/
+	&& find(no_collision_group.begin(), no_collision_group.end(), o2) != no_collision_group.end()) return;*/
 
 	const int MAX_CONTACTS = 8;
 	dContact contact[MAX_CONTACTS];
