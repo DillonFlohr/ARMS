@@ -62,7 +62,8 @@ static dBodyID body_fdafa;
 static dGeomID geom_fdafa;
 const float sides_fdafa[3] = { 5, 5, 5 };
 
-vector<dGeomID> no_collision_group;
+vector<unordered_map<dGeomID, int>> no_collision_groups;
+unordered_map<dGeomID, int> no_collision_map;
 
 void start()
 {
@@ -123,8 +124,12 @@ static void nearCallback(void *, dGeomID o1, dGeomID o2)
 	dBodyID b2 = dGeomGetBody(o2);
 
 	//Uncomment if you don't want connected objects to hit eachother.
-	if (find(no_collision_group.begin(), no_collision_group.end(), o1) != no_collision_group.end()
-		&& find(no_collision_group.begin(), no_collision_group.end(), o2) != no_collision_group.end()) return;
+	for (auto group : no_collision_groups) {
+		if (group.find(o1) != group.end()
+			&& group.find(o2) != group.end()) return;
+	}
+	/*if (find(no_collision_group.begin(), no_collision_group.end(), o1) != no_collision_group.end()
+		&& find(no_collision_group.begin(), no_collision_group.end(), o2) != no_collision_group.end()) return;*/
 
 	const int MAX_CONTACTS = 8;
 	dContact contact[MAX_CONTACTS];
@@ -324,9 +329,9 @@ int main(int argc, char **argv)
 	dJointAttach(ball_joint_3, body_box3, body_box4);
 	dJointSetBallAnchor(ball_joint_3, 1.0, 0.0, 5.5);
 
-
-	no_collision_group.push_back(geom_box3);
-	no_collision_group.push_back(geom_box4);
+	no_collision_map[geom_box3] = 0;
+	no_collision_map[geom_box4] = 0;
+	no_collision_groups.push_back(no_collision_map);
 
 	reset_bodies();
 
