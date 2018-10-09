@@ -91,6 +91,53 @@ def convert_constants():
 								if (items[key][i][0] == "$"):
 									items[key][i] = get_constant(items[key][i][1:])
 
+#Recursively set the position of parent's children, then do the same for the children's children
+def convert_positions(parent_name, parent_tree, is_root):
+	this_parent_position = get_shape_by_name(parent_name)['position']
+	for child in parent_tree:
+		this_child_position = get_shape_by_name(child)['position']
+		this_child_position[0] += this_parent_position[0]
+		this_child_position[1] += this_parent_position[1]
+		this_child_position[2] += this_parent_position[2]
+		convert_positions(child, parent_tree[child], False)
+
+
+# A shape is a root unless there is a joint with that shape as a child
+def shape_is_root(shape_name):
+	is_root = True
+	if 'joint' in arms:
+		for joint in arms['joint']:
+			if (joint['child'] == shape_name):
+				is_root = False
+	return is_root
+
+#Recursively get the children of some parent shape
+def get_children_of(parent_name):
+	result = {}
+	if 'joint' in arms:
+		for joint in arms['joint']:
+			if (joint['parent'] == parent_name):
+				result[joint['child']] = get_children_of(joint['child'])
+
+	return result
+
+def make_positions_relative_to_parents():
+	#tree of parents and children
+	ancestor_tree = {}
+
+	#Get all the roots
+	for shape_type in shapes:
+		if shape_type in arms and shape_type != 'joint':
+			for shape in arms[shape_type]:
+				if (shape_is_root(shape[ArmsValue.name.value])):
+					ancestor_tree[shape[ArmsValue.name.value]] = {}
+
+	for root in ancestor_tree:
+		ancestor_tree[root] = get_children_of(root)
+
+	for root in ancestor_tree:
+		convert_positions(root, ancestor_tree[root], True)
+
 def create_non_colliding_groups():
 	result = ""
 
@@ -323,6 +370,8 @@ def main():
 	template_string = template_path.read_text()
 
 	convert_constants()
+
+	make_positions_relative_to_parents()
 
 	if type(arms) is dict:
 		where_to_save.write_text(template_string.format(

@@ -1,0 +1,57 @@
+[[constants]]
+test = [-1.0, 0.5 , 6.0]
+radius = 0.5
+box_color = [1, 1, 0]
+
+[[sphere]]
+name = "ball1"
+radius = "$radius"
+position = [0.0, 0.0, 10.0]
+
+[[joint]]
+joint_type = "ball"
+name = "ball_joint_1"
+parent = "ball1"
+child = "ball2"
+
+[[sphere]]
+name = "ball2"
+radius = "$radius"
+color = "$box_color"
+position = [0.0, 1.0, 0.1]
+
+[[joint]]
+joint_type = "ball"
+name = "ball_joint_2"
+parent = "ball2"
+child = "ball3"
+
+[[sphere]]
+name = "ball3"
+radius = "$radius"
+color = "$box_color"
+position = [0.0, 1.0, 0.1]
+
+[[joint]]
+joint_type = "ball"
+name = "ball_joint_3"
+parent = "ball1"
+child = "ball4"
+
+[[sphere]]
+name = "ball4"
+radius = "$radius"
+color = "$box_color"
+position = [0.0, -1.0, -0.1]
+
+[[joint]]
+joint_type = "ball"
+name = "ball_joint_4"
+parent = "ball1"
+child = "ball5"
+
+[[sphere]]
+name = "ball5"
+radius = "$radius"
+color = "$box_color"
+position = [0.0, 0.0, 0.5]
