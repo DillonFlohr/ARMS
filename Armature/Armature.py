@@ -93,12 +93,14 @@ def convert_constants():
 
 #Recursively set the position of parent's children, then do the same for the children's children
 def convert_positions(parent_name, parent_tree, is_root):
-	this_parent_position = get_shape_by_name(parent_name)['position']
+	this_parent_position = get_required_value(get_shape_by_name(parent_name), 'position')
 	for child in parent_tree:
-		this_child_position = get_shape_by_name(child)['position']
-		this_child_position[0] += this_parent_position[0]
-		this_child_position[1] += this_parent_position[1]
-		this_child_position[2] += this_parent_position[2]
+		this_child = get_shape_by_name(child)
+		this_child['position'] = [0, 0, 0]
+		this_child_relative_position = get_required_value(this_child, 'relative_position')
+		this_child['position'][0] = this_parent_position[0] + this_child_relative_position[0]
+		this_child['position'][1] = this_parent_position[1] + this_child_relative_position[1]
+		this_child['position'][2] = this_parent_position[2] + this_child_relative_position[2]
 		convert_positions(child, parent_tree[child], False)
 
 

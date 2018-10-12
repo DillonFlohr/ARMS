@@ -18,7 +18,7 @@ child = "ball2"
 name = "ball2"
 radius = "$radius"
 color = "$box_color"
-position = [0.0, 1.0, 0.1]
+relative_position = [0.0, 1.0, 0.1]
 
 [[joint]]
 joint_type = "ball"
@@ -30,7 +30,7 @@ child = "ball3"
 name = "ball3"
 radius = "$radius"
 color = "$box_color"
-position = [0.0, 1.0, 0.1]
+relative_position = [0.0, 1.0, 0.1]
 
 [[joint]]
 joint_type = "ball"
@@ -42,7 +42,7 @@ child = "ball4"
 name = "ball4"
 radius = "$radius"
 color = "$box_color"
-position = [0.0, -1.0, -0.1]
+relative_position = [0.0, -1.0, -0.1]
 
 [[joint]]
 joint_type = "ball"
@@ -54,4 +54,4 @@ child = "ball5"
 name = "ball5"
 radius = "$radius"
 color = "$box_color"
-position = [0.0, 0.0, 0.5]
+relative_position = [0.0, 0.0, 0.5]
