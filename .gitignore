@@ -6,3 +6,4 @@ odedevs-ode-841a072b124c/*
 __pycache__
 *.pyc
 .vscode/
+*.cpp

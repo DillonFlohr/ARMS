@@ -27,13 +27,14 @@ The first environment ARMS will target is the Open Dynamics Engine. https://bitb
 
     You can put any .cpp file genterated by Armature into an ODE demo's associated .cpp file to see the results of a ARMS file.
 
-# Syntax Specification v0.5.0
+# Syntax Specification v0.5.5
 Below is a list of configurations currently supported by ARMS
 
 ## Shapes:
 ```
 [[Sphere]]
 position = [0, 0, 0] #Position in world space
+relative_position = [0, 0, 0] #Position relative to this shapes parent
 radius = 1.0 #Radius of the sphere
 name = "ball" #Name that is used to reference this shape in joint.
 color = [1, 0, 0] #color in RGB
@@ -42,6 +43,7 @@ color = [1, 0, 0] #color in RGB
 ```
 [[Box]]
 position = [0, 0, 0] #Position in world space
+relative_position = [0, 0, 0] #Position relative to this shapes parent
 sides = [1.0, 1.0, 1.0] #Sides in length, width, height
 name = "box" #Name that is used to reference this shape in joint
 color = [1, 0, 0] #color in RGB
