@@ -18,7 +18,7 @@ The first environment ARMS will target is the Open Dynamics Engine. https://bitb
 - >git clone https://bitbucket.org/odedevs/ode
 - Navigate to odedevs-ode-841a072b124c/build/
 - Run:
- >premake.exe --only-single --with-demos vs2010
+ >premake4.exe --only-single --with-demos vs2010
 - Open Visual Studio 2017
 - Click File/Open/File...
 - Navigate to **odedevs-ode-841a072b124c\build\vs2010\ode.sln**
