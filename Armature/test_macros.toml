@@ -1,0 +1,58 @@
+[[constants]]
+test = [-1.0, 0.5 , 6.0]
+radius = 1.0
+box_color = [1, 1, 0]
+
+#macro creation
+[[macro.ball_and_box]]
+param1 = "side_length"
+param2 = "parent"
+param3 = "realtive_position"
+
+    [[macro.ball_and_box.joint]]
+    joint_type = "ball"
+    name = "macro_joint"
+    parent = "$param2"
+    child = "box1"
+
+    [[macro.ball_and_box.box]]
+    name = "macro_box"
+    sides = [1, 1, 1]
+    color = "$box_color"
+    position = "$test"
+
+#another macro creation
+[[macro.ball_and_sphere]]
+param1 = "radius"
+param2 = "parent"
+
+    [[macro.ball_and_sphere.joint]]
+    joint_type = "ball"
+    name = "macro_joint"
+    parent = "$param2"
+    child = "box1"
+
+    [[macro.ball_and_sphere.box]]
+    name = "macro_box"
+    sides = [1, 1, 1]
+    color = "$box_color"
+    position = "$test"
+
+#regular shape creator
+[[box]]
+name = "box1"
+sides = [1, 1, 1]
+color = "$box_color"
+position = "$test"
+
+#macro call with the above shape passed in as parent
+[[ball_and_box]]
+param1 = "1"
+param2 = "box1"
+param3 = []
+
+
+[[ball_and_box]]
+param1 = "1"
+param2 = "box1"
+param3 = []

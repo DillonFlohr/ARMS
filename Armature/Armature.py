@@ -4,7 +4,7 @@ except:
 	print("\n**************************************\nPlease install toml to use Armature.py\n> pip install toml\n**************************************\n")
 	quit()
 import sys
-import pprint
+import pprint as pp
 from pathlib import Path
 from enum import Enum
 
@@ -62,19 +62,38 @@ def get_required_value(body, value):
 			print(f"Error: Something is missing a name.")
 		quit()
 
-def get_constant(target_var):
+def get_constant(target_const):
 	result = None
 	if ArmsValue.constants.value in arms:
 		constants = arms[ArmsValue.constants.value][0]
 		for var in constants:
-			if var == target_var:
+			if var == target_const:
 				result = constants[var]
 	
 	if result != None:
 		return result
 	else:
-		print(f"Constant name {target_var} does not exist. \nExiting the program.")
+		print(f"Constant name {target_const} does not exist. \nExiting the program.")
 		quit()
+
+def convert_macros():
+	arms['joint'] = []
+	if 'macro' in arms:
+		for macro in arms['macro']:
+			print(macro)
+			for obj in arms['macro'][macro]:
+				for shape in obj:
+				#if arms['macro'][macro][shape] in shapes:
+					if shape in shapes:
+						pp.pprint(shape)
+						pp.pprint(obj[shape])
+						pp.pprint(type(arms[shape]))
+						pp.pprint(arms[shape])
+						arms[shape].append(obj[shape])
+					
+
+	print("\nPrinting ARMS:\n")
+	pp.pprint(arms)
 
 def convert_constants():
 	global arms
@@ -82,6 +101,7 @@ def convert_constants():
 		if shape in arms:
 			for items in arms[shape]:
 				for key in items:
+					print(key)
 					if type(items[key]) == str:
 						if (items[key][0] == "$"):
 							items[key] = get_constant(items[key][1:])
@@ -322,6 +342,7 @@ def main():
 	template_path = Path("templates/basic_template.txt")
 	template_string = template_path.read_text()
 
+	convert_macros()
 	convert_constants()
 
 	if type(arms) is dict:
