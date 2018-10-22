@@ -16,6 +16,7 @@ position = [1.0, -0.5, 10.0]
 name = "ball_joint_2"
 parent = "ball1"
 child = "ball2"
+relative_position = [0.0, 0.5, 0.0]
 
 [[sphere]]
 name = "ball2"
@@ -33,6 +34,7 @@ position = "$test"
 name = "ball_joint_1"
 parent = "box1"
 child = "asdf"
+relative_position = [0.0, 0.5, -0.5]
 
 [[box]]
 name = "asdf"
@@ -48,6 +50,7 @@ position = [1.0, 0.5 , 6.0]
 name = "ball_joint_3"
 parent = "box3"
 child = "box4"
+relative_position = [0.0, 0.5, -0.5]
 
 [[box]]
 name = "box4"
