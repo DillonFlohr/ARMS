@@ -12,17 +12,17 @@ name = "ball1"
 radius = "$radius"
 position = [1.0, -0.5, 10.0]
 
-[[joint]]
-joint_type = "ball"
+[[ball_and_socket]]
 name = "ball_joint_2"
 parent = "ball1"
 child = "ball2"
+relative_position = [0.0, 0.5, 0.0]
 
 [[sphere]]
 name = "ball2"
 radius = "$radius"
 color = "$box_color"
-position = [1.0, 0.5, 10.0]
+relative_position = [0.0, 1.0, 0.0]
 
 [[box]]
 name = "box1"
@@ -30,33 +30,33 @@ sides = [1, 1, 1]
 color = "$box_color"
 position = "$test"
 
-[[joint]]
+[[ball_and_socket]]
 name = "ball_joint_1"
-joint_type = "ball"
 parent = "box1"
 child = "asdf"
+relative_position = [0.0, 0.5, -0.5]
 
 [[box]]
 name = "asdf"
 sides = [1, 1, 1]
-position = [-1.0, -0.5 , 5.0]
+relative_position = [0.0, 1.0, -1.0]
 
 [[box]]
 name = "box3"
 sides = [1, 1, 1]
 position = [1.0, 0.5 , 6.0]
 
-[[joint]]
-joint_type = "ball"
+[[ball_and_socket]]
 name = "ball_joint_3"
 parent = "box3"
 child = "box4"
+relative_position = [0.0, 0.5, -0.5]
 
 [[box]]
 name = "box4"
 sides = [1, 1, 1]
 color = "$box_color"
-position = [1.0, -0.5 , 5.0]
+relative_position = [0.0, 1.0, -1.0]
 
 [[box]]
 name = "big_box"
