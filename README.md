@@ -27,45 +27,51 @@ The first environment ARMS will target is the Open Dynamics Engine. https://bitb
 
     You can put any .cpp file genterated by Armature into an ODE demo's associated .cpp file to see the results of a ARMS file.
 
-# Syntax Specification v0.5.5
+# Syntax Specification v0.5.7
 Below is a list of configurations currently supported by ARMS
 
 ## Shapes:
 ```
-[[Sphere]]
+[[sphere]]
 position = [0, 0, 0] #Position in world space
 relative_position = [0, 0, 0] #Position relative to this shapes parent
 radius = 1.0 #Radius of the sphere
-name = "ball" #Name that is used to reference this shape in joint.
+name = "ball" #Name that is used to reference this shape in joints and groups
 color = [1, 0, 0] #color in RGB
 ```
 
 ```
-[[Box]]
+[[box]]
 position = [0, 0, 0] #Position in world space
 relative_position = [0, 0, 0] #Position relative to this shapes parent
 sides = [1.0, 1.0, 1.0] #Sides in length, width, height
-name = "box" #Name that is used to reference this shape in joint
+name = "box" #Name that is used to reference this shape in joints and groups
 color = [1, 0, 0] #color in RGB
 ```
 
 ## Joints:
+
 ```
-[[joint]]
-joint_type = "ball" #Type of this joint (Type will move into square brackets in the future)
+[[ball_and_socket]]
 name = "ball_joint" 
-parent = "ball" #parent shape
-child = "box" #child shape
+parent = "ball" #parent shape's name
+child = "box" #child shape's name
+relative_position = [0.0, 1.0, -1.0] #This position is relative to the parent
 ```
+Note that a joint's relative positon is relative to the parent shape.
+
+As of v0.5.7, when a shape is a child, it requires the relative_position attribute. This may change to having 'position' automatically be the relative position and a 'is_child' attribute required in future versions of ARMS.
 ## Functionality:
+### Non-Colliding Groups:
 ```
 [[non_colliding_groups]] #objects named in a group will not collide with each other
 group1 = ["box1", "box2", "big_box"]
 group2 = ["box3", "box4", "big_box"]
 ```
+### Constants:
 ```
 #Constants can be used with $ syntax
-[[Constants]]
+[[constants]]
 color = [1, 0, 1]
 size = 1.0
 
