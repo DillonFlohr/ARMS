@@ -120,11 +120,7 @@ def shape_is_root(shape_name):
 			for joint in arms[joint_type]:
 				if (joint['child'] == shape_name):
 					is_root = False
-
-	# if 'joint' in arms:
-	# 	for joint in arms['joint']:
-	# 		if (joint['child'] == shape_name):
-	# 			is_root = False
+					
 	return is_root
 
 #Recursively get the children of some parent shape
@@ -135,11 +131,6 @@ def get_children_of(parent_name):
 			for joint in arms[joint_type]:
 				if (joint['parent'] == parent_name):
 					result[joint['child']] = get_children_of(joint['child'])
-	
-	# if 'joint' in arms:
-	# 	for joint in arms['joint']:
-	# 		if (joint['parent'] == parent_name):
-	# 			result[joint['child']] = get_children_of(joint['child'])
 
 	return result
 
