@@ -1,58 +1,65 @@
 [[constants]]
-test = [-1.0, 0.5 , 6.0]
+test = [1.0, 0.5 , 6.0]
 radius = 1.0
 box_color = [1, 1, 0]
 
 #macro creation
-[[macro.ball_and_box]]
-param1 = "side_length"
-param2 = "parent"
-param3 = "realtive_position"
+# [[macro.ball_and_box]]
+# param1 = "side_length"
+# param2 = "parent"
+# param3 = "realtive_position"
 
-    [[macro.ball_and_box.joint]]
-    joint_type = "ball"
-    name = "macro_joint"
-    parent = "$param2"
-    child = "box1"
+#     [[macro.ball_and_box.ball_and_socket]]
+#     joint_type = "ball"
+#     name = "macro_joint"
+#     parent = "box1"
+#     child = "macro_box"
+#     relative_position = "$test"
 
-    [[macro.ball_and_box.box]]
-    name = "macro_box"
+#     [[macro.ball_and_box.box]]
+#     name = "macro_box"
+#     sides = [1, 1, 1]
+#     color = "$box_color"
+#     relative_position = "$test"
+
+# #another macro creation
+# [[macro.ball_and_sphere]]
+# param1 = "radius"
+# param2 = "parent"
+
+#     [[macro.ball_and_sphere.ball_and_socket]]
+#     joint_type = "ball"
+#     name = "macro_joint"
+#     parent = "box1"
+#     child = "macro_sphere"
+#     relative_position = "$test"
+
+#     [[macro.ball_and_sphere.sphere]]
+#     name = "macro_sphere"
+#     sides = [1, 1, 1]
+#     radius = 0.5
+#     color = "$box_color"
+#     relative_position = "$test"
+
+[[macro.box_to_box]]
+param1 = "whatevs"
+
+    [[macro.box_to_box.box]]
+    name = "box1"
     sides = [1, 1, 1]
     color = "$box_color"
     position = "$test"
 
-#another macro creation
-[[macro.ball_and_sphere]]
-param1 = "radius"
-param2 = "parent"
+    [[macro.box_to_box.ball_and_socket]]
+    name = "ball_joint_2"
+    parent = "box1"
+    child = "box2"
+    relative_position = [0.0, 0.5, 0.0]
 
-    [[macro.ball_and_sphere.joint]]
-    joint_type = "ball"
-    name = "macro_joint"
-    parent = "$param2"
-    child = "box1"
-
-    [[macro.ball_and_sphere.box]]
-    name = "macro_box"
+    [[macro.box_to_box.box]]
+    name = "box2"
     sides = [1, 1, 1]
     color = "$box_color"
-    position = "$test"
+    relative_position = [0.0, 1.0, 0.0]
 
-#regular shape creator
-[[box]]
-name = "box1"
-sides = [1, 1, 1]
-color = "$box_color"
-position = "$test"
-
-#macro call with the above shape passed in as parent
-[[ball_and_box]]
-param1 = "1"
-param2 = "box1"
-param3 = []
-
-
-[[ball_and_box]]
-param1 = "1"
-param2 = "box1"
-param3 = []
+[[box_to_box]]

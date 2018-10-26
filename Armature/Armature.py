@@ -80,37 +80,50 @@ def get_constant(target_const):
 		quit()
 
 def convert_macros():
-	arms['joint'] = []
+	arms['ball_and_socket'] = []
+	arms['box'] = []
+	arms['sphere'] = []
 	if 'macro' in arms:
 		for macro in arms['macro']:
-			print(macro)
+			#print(macro)
 			for obj in arms['macro'][macro]:
-				for shape in obj:
+				for item_type in obj:
+					print(obj[item_type])
+					if type(item_type)
+					#for item in range(obj[item_type]):
+						#print(item_type[item])
 				#if arms['macro'][macro][shape] in shapes:
-					if shape in shapes:
-						pp.pprint(shape)
-						pp.pprint(obj[shape])
-						pp.pprint(type(arms[shape]))
-						pp.pprint(arms[shape])
-						arms[shape].append(obj[shape])
+						# if item in shapes:
+						# 	print(item)
+							# pp.pprint(shape)
+							# pp.pprint(obj[shape])
+							# pp.pprint(type(arms[shape]))
+							#pp.pprint(arms[shape])
+							#arms[shape].append(obj[shape][0])
+				# for shape in obj:
+				# 	if shape in joints:
+				# 		arms[shape].append(obj[shape][0])
 					
 
-	print("\nPrinting ARMS:\n")
-	pp.pprint(arms)
+	# print("\nPrinting ARMS:\n")
+	# pp.pprint(arms)
 
 def convert_constants():
 	global arms
 	for group in arms:
-		for item in arms[group]:
-			for value in item:
-				if type(item[value]) == str:
-					if (item[value][0] == "$"):
-						item[value] = get_constant(item[value][1:])
-				if type(item[value]) == list:
-					for i in range(0, len(item[value])):
-						if type(item[value][i]) == str:
-							if (item[value][i][0] == "$"):
-								item[value][i] = get_constant(item[value][i][1:])
+		#print(group)
+		if group != 'macro':
+			for item in arms[group]:
+				#print(item)
+				for value in item:
+					if type(item[value]) == str:
+						if (item[value][0] == "$"):
+							item[value] = get_constant(item[value][1:])
+					if type(item[value]) == list:
+						for i in range(0, len(item[value])):
+							if type(item[value][i]) == str:
+								if (item[value][i][0] == "$"):
+									item[value][i] = get_constant(item[value][i][1:])
 
 # A shape is a root unless there is a joint with that shape as a child
 def shape_is_root(shape_name):
@@ -409,6 +422,8 @@ def main():
 
 	make_shape_positions_relative_to_parents()
 	make_joint_positions_relative_to_parent_shape()
+
+	#pp.pprint(arms)
 
 	if type(arms) is dict:
 		where_to_save.write_text(template_string.format(
