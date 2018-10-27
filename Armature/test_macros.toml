@@ -1,5 +1,5 @@
 [[constants]]
-test = [1.0, 0.5 , 6.0]
+position = [1.0, 0.5 , 6.0]
 radius = 1.0
 box_color = [1, 1, 0]
 
@@ -42,24 +42,72 @@ box_color = [1, 1, 0]
 #     relative_position = "$test"
 
 [[macro.box_to_box]]
-param1 = "whatevs"
+color = ""
+position = [0, 0, 10]
+name = "no_name"
+joint_name = "joint_name"
+child_name = "child_name"
 
     [[macro.box_to_box.box]]
-    name = "box1"
+    name = "$name"
     sides = [1, 1, 1]
-    color = "$box_color"
-    position = "$test"
+    color = "$color"
+    position = "$position"
 
     [[macro.box_to_box.ball_and_socket]]
-    name = "ball_joint_2"
-    parent = "box1"
-    child = "box2"
+    name = "$joint_name"
+    parent = "$name"
+    child = "$child_name"
     relative_position = [0.0, 0.5, 0.0]
 
     [[macro.box_to_box.box]]
-    name = "box2"
+    name = "$child_name"
     sides = [1, 1, 1]
     color = "$box_color"
     relative_position = [0.0, 1.0, 0.0]
 
+[[macro.sphere_to_sphere]]
+color = ""
+position = [0, 0, 10]
+name = "no_name"
+joint_name = "joint_name"
+child_name = "child_name"
+
+    [[macro.sphere_to_sphere.sphere]]
+    name = "$name"
+    radius = 0.5
+    color = "$color"
+    position = "$position"
+
+    [[macro.sphere_to_sphere.ball_and_socket]]
+    name = "$joint_name"
+    parent = "$name"
+    child = "$child_name"
+    relative_position = [0.0, 0.5, 0.0]
+
+    [[macro.sphere_to_sphere.sphere]]
+    name = "$child_name"
+    radius = 0.5
+    color = "$box_color"
+    relative_position = [0.0, 1.0, 0.0]
+
 [[box_to_box]]
+color = [1, 0, 0]
+position = [0, 0, 5]
+name = "qwer"
+joint_name = "wert"
+child_name = "erty"
+
+[[box_to_box]]
+color = [0, 1, 0]
+position = [0, 0, 9]
+name = "rtyu"
+joint_name = "tyui"
+child_name = "yuio"
+
+[[sphere_to_sphere]]
+color = [0, 0, 1]
+position = [0, 0, 11]
+name = "zxcfv"
+joint_name = "xcvb"
+child_name = "cvbn"
