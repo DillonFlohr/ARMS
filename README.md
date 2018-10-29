@@ -27,7 +27,7 @@ The first environment ARMS will target is the Open Dynamics Engine. https://bitb
 
     You can put any .cpp file genterated by Armature into an ODE demo's associated .cpp file to see the results of a ARMS file.
 
-# Syntax Specification v0.5.7
+# Syntax Specification v0.6.7
 Below is a list of configurations currently supported by ARMS
 
 ## Shapes:
@@ -80,6 +80,53 @@ size = 1.0
 sides = ["$size", "$size", "$size"]
 color = "$color"
 ```
+### Macros:
+
+A macro is a group of shapes/joints that can be repeatedly called and given parameters.
+
+Constants (strings beginning with '$') in a macro object will first be given the value of the matching macro parameter. If there is no matching parameter the cooresponding global constant will be used.
+
+```
+# macro definition with parameter list
+[[macro.attach_sphere]]
+parent_name = ""
+my_name = ""
+joint_name = ""
+
+    # shape in the macro attach_sphere
+    [[macro.attach_sphere.ball_and_socket]]
+    name = "$joint_name"
+    parent = "$parent_name"
+    child = "$my_name"
+    relative_position = [0.0, 0.5, 0.0]
+
+    # shape in the macro attach_sphere
+    [[macro.attach_sphere.sphere]]
+    name = "$my_name"
+    radius = 0.5
+    color = "$box_color"
+    relative_position = [0.0, 1.0, 0.0]
+
+# regular shape creation
+[[sphere]]
+name = "ball1"
+radius = "$radius"
+position = [1.0, -0.5, 10.0]
+
+# macro call, the shape above is passed in as the parent
+[[attach_sphere]]
+parent_name = "ball1"
+my_name = "first_attatched_sphere"
+joint_name = "random_joint_name"
+
+# another macro call, this time the shape created in the macro
+# above is given as the parent of this macro shape
+[[attach_sphere]]
+parent_name = "first_attatched_sphere"
+my_name = "second_attatched_sphere"
+joint_name = "random_joint_name"
+```
+
 
 # Roadmap
 Trello Board: https://trello.com/b/xtciB7o8/arms
