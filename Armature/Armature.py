@@ -11,6 +11,7 @@ import pprint as pp
 from pathlib import Path
 from enum import Enum
 import copy
+import random
 
 class ArmsValue(Enum):
 	box = 'box'
@@ -36,6 +37,9 @@ joints = {
 
 #parsed as dictionary data from the .arms/toml file
 arms = None
+
+def generate_random_names():
+	pass
 
 def get_shape_by_name(target_name):
 	result = None
@@ -436,6 +440,7 @@ def main():
 	template_path = Path("templates/basic_template.txt")
 	template_string = template_path.read_text()
 
+	generate_random_names()
 	convert_macros()
 	convert_constants()
 
