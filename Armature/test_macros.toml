@@ -3,44 +3,7 @@ position = [1.0, 0.5 , 6.0]
 radius = 1.0
 box_color = [1, 1, 0]
 
-#macro creation
-# [[macro.ball_and_box]]
-# param1 = "side_length"
-# param2 = "parent"
-# param3 = "realtive_position"
-
-#     [[macro.ball_and_box.ball_and_socket]]
-#     joint_type = "ball"
-#     name = "macro_joint"
-#     parent = "box1"
-#     child = "macro_box"
-#     relative_position = "$test"
-
-#     [[macro.ball_and_box.box]]
-#     name = "macro_box"
-#     sides = [1, 1, 1]
-#     color = "$box_color"
-#     relative_position = "$test"
-
-# #another macro creation
-# [[macro.ball_and_sphere]]
-# param1 = "radius"
-# param2 = "parent"
-
-#     [[macro.ball_and_sphere.ball_and_socket]]
-#     joint_type = "ball"
-#     name = "macro_joint"
-#     parent = "box1"
-#     child = "macro_sphere"
-#     relative_position = "$test"
-
-#     [[macro.ball_and_sphere.sphere]]
-#     name = "macro_sphere"
-#     sides = [1, 1, 1]
-#     radius = 0.5
-#     color = "$box_color"
-#     relative_position = "$test"
-
+## macro definition
 [[macro.box_to_box]]
 color = ""
 position = [0, 0, 10]
@@ -66,6 +29,7 @@ child_name = "child_name"
     color = "$box_color"
     relative_position = [0.0, 1.0, 0.0]
 
+## macro definition
 [[macro.sphere_to_sphere]]
 color = ""
 position = [0, 0, 10]
@@ -91,6 +55,25 @@ child_name = "child_name"
     color = "$box_color"
     relative_position = [0.0, 1.0, 0.0]
 
+## macro definition
+[[macro.attach_sphere]]
+parent_name = ""
+my_name = ""
+joint_name = ""
+
+    [[macro.attach_sphere.ball_and_socket]]
+    name = "$joint_name"
+    parent = "$parent_name"
+    child = "$my_name"
+    relative_position = [0.0, 0.5, 0.0]
+
+    [[macro.attach_sphere.sphere]]
+    name = "$my_name"
+    radius = 0.5
+    color = "$box_color"
+    relative_position = [0.0, 1.0, 0.0]
+
+#macro usage
 [[box_to_box]]
 color = [1, 0, 0]
 position = [0, 0, 5]
@@ -111,3 +94,18 @@ position = [0, 0, 11]
 name = "zxcfv"
 joint_name = "xcvb"
 child_name = "cvbn"
+
+[[attach_sphere]]
+parent_name = "cvbn"
+my_name = "jgkh"
+joint_name = "ohdirs"
+
+[[attach_sphere]]
+parent_name = "jgkh"
+my_name = "iuhdh"
+joint_name = "poiasd"
+
+[[attach_sphere]]
+parent_name = "erty"
+my_name = "haegd"
+joint_name = "uinfg"
