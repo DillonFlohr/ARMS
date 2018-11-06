@@ -188,7 +188,7 @@ Please give one argument as the ARMS file to parse, and a second, optional, argu
 	#If no options are given, ask for them
 	if len(opts) < 1:
 		print("\
-Please give options to select the type of file you'd like Armature to produce.\n\
+Please give options to select the type of file you'd like Armature to produce. You may do multiple options.\n\
 \ni.e. >python Armature.py --drawstuff my/super/cool/file.arms where/i/want/to/save\n\
 \nSupported Files:\n\
 --drawstuff (.cpp file that you can use with the ODE demos)\n")

@@ -12,10 +12,10 @@ The first environment ARMS will target is the Open Dynamics Engine. https://bitb
 - Install toml
 > pip install toml
 - Run:
-> python Armature.py my/file/location.toml where/I/want/to/save
+> python Armature.py --selectedFileType my/file/location.toml where/I/want/to/save
 
 ### To see ODE in action:
-- >git clone https://bitbucket.org/odedevs/ode
+- Download the repository https://bitbucket.org/odedevs/ode
 - Navigate to odedevs-ode-841a072b124c/build/
 - Run:
  >premake4.exe --only-single --with-demos vs2010
@@ -27,8 +27,14 @@ The first environment ARMS will target is the Open Dynamics Engine. https://bitb
 
     You can put any .cpp file genterated by Armature into an ODE demo's associated .cpp file to see the results of a ARMS file.
 
-# Syntax Specification v0.6.7
+## Export Options for v0.6.9 or later:
+Below are the currently supported export options.
+
+> --drawstuff
+# Syntax Specification v0.6.9
 Below is a list of configurations currently supported by ARMS
+
+
 
 ## Shapes:
 ```
