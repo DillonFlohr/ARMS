@@ -1,5 +1,4 @@
-from Creators import OdeDrawStuffCreator
-from Creators import SdfCreator
+from Creators import *
 
 def AllArmsCreators():
     return [OdeDrawStuffCreator.OdeDrawStuffCreator(),
