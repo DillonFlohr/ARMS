@@ -52,3 +52,14 @@ def get_shape_by_name(target_name, armsDict):
 	else:
 		print(f"Shape with name {target_name} does not exist. \nExiting the program.")
 		quit()
+
+# A shape is a root unless there is a joint with that shape as a child
+def shape_is_root(shape_name, arms):
+	is_root = True
+	for joint_type in joints:
+		if joint_type in arms:
+			for joint in arms[joint_type]:
+				if (joint['child'] == shape_name):
+					is_root = False
+					
+	return is_root

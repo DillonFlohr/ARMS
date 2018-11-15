@@ -1,0 +1,4 @@
+[[sphere]]
+name = "ball1"
+radius = 1
+position = [1.0, -0.5, 10.0]

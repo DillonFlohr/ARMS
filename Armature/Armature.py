@@ -98,17 +98,6 @@ def convert_constants():
 								if (is_constant_call(item[value][i][0])):
 									item[value][i] = get_constant(item[value][i])
 
-# A shape is a root unless there is a joint with that shape as a child
-def shape_is_root(shape_name):
-	is_root = True
-	for joint_type in joints:
-		if joint_type in arms:
-			for joint in arms[joint_type]:
-				if (joint['child'] == shape_name):
-					is_root = False
-					
-	return is_root
-
 #Recursively get the children of some parent shape
 def get_children_of(parent_name):
 	result = {}
@@ -128,7 +117,7 @@ def make_shape_positions_relative_to_parents():
 	for shape_type in shapes:
 		if shape_type in arms:
 			for shape in arms[shape_type]:
-				if (shape_is_root(shape[ArmsValue.name.value])):
+				if (ah.shape_is_root(shape[ArmsValue.name.value], arms)):
 					ancestor_tree[shape[ArmsValue.name.value]] = {}
 
 	for root in ancestor_tree:
@@ -164,7 +153,7 @@ def make_joint_positions_relative_to_parent_shape():
 def main():
 	args = sys.argv
 	#options supported by Armature
-	long_options = ["drawstuff"] #"sdf"]
+	long_options = ["drawstuff", "sdf"]
 
 	#Get all the options, if there is an invalid option, quit
 	try:
