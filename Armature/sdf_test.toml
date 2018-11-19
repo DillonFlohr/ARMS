@@ -2,3 +2,8 @@
 name = "ball1"
 radius = 0.5
 position = [1.0, -0.5, 10.0]
+
+[[box]]
+name = "box1"
+sides = [0.25, 0.25, 0.25]
+position = [1.0, -0.5, 5.0]

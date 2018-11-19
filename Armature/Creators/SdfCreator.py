@@ -16,10 +16,10 @@ class SdfCreator(IArmsCreator.IArmsCreator):
     def file_extension(self):
         return ".sdf"
 
-    def CanCreate(self, fileType):
+    def can_create(self, fileType):
         return re.search('--sdf', fileType, re.I) != None
 
-    def CreateFile(self, armsDict):
+    def create_file(self, armsDict):
         self.__arms = armsDict
 
         template_path = Path("Creators/templates/flat_world.sdf")
@@ -36,7 +36,7 @@ class SdfCreator(IArmsCreator.IArmsCreator):
             if group_of_things in shapes:
                 for thing in self.__arms[group_of_things]:
                     #link variables
-                    name = thing[ArmsValue.name.value]
+                    name = ah.get_required_value(thing, ArmsValue.name.value)
                     position = thing[ArmsValue.position.value]
                     radius = None
                     sides = None
@@ -48,9 +48,9 @@ class SdfCreator(IArmsCreator.IArmsCreator):
                         size = f"<size>{sides[0]} {sides[1]} {sides[2]}</size>"
                     if ah.shape_is_root(thing, self.__arms):
                         new_model = f"""
-    <model name='{name}_model'>
+    <model name='model_{name}'>
         <pose frame=''>{position[0]} {position[1]} {position[2]} 0 -0 0</pose>
-        <link name='source_{name}'>
+        <link name='{name}'>
             <inertial>
                 <mass>1</mass>
                 <inertia>

@@ -14,11 +14,11 @@ class OdeDrawStuffCreator(IArmsCreator.IArmsCreator):
     @property
     def file_extension(self):
         return "_DrawStuff.cpp"
-
-    def CanCreate(self, fileType):
+        
+    def can_create(self, fileType):
         return fileType == "--drawstuff"
 
-    def CreateFile(self, armsDict):
+    def create_file(self, armsDict):
         self.__arms = armsDict
 
         template_path = Path("Creators/templates/basic_template.txt")

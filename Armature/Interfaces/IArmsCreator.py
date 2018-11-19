@@ -7,9 +7,9 @@ class IArmsCreator(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def CanCreate(self, fileType):
+    def can_create(self, fileType):
         pass
 
     @abc.abstractmethod
-    def CreateFile(self, armsDict):
+    def create_file(self, armsDict):
         pass

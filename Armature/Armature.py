@@ -165,7 +165,7 @@ def main():
 	file_to_parse = None
 	where_to_save = None
 
-	#If not input file was given
+	#If no input file was given
 	if len(args) == 1:
 		print("\
 Please give one argument as the ARMS file to parse, and a second, optional, argument as the save location.\n\
@@ -178,9 +178,10 @@ Please give one argument as the ARMS file to parse, and a second, optional, argu
 	if len(opts) < 1:
 		print("\
 Please give options to select the type of file you'd like Armature to produce. You may do multiple options.\n\
-\ni.e. >python Armature.py --drawstuff my/super/cool/file.arms where/i/want/to/save\n\
-\nSupported Files:\n\
---drawstuff (.cpp file that you can use with the ODE demos)\n")
+\ni.e. >python Armature.py --drawstuff --sdf my/super/cool/file.arms where/i/want/to/save\n\
+\nAvailible Options:")
+		for option in long_options:
+			print(f'--{option}')
 		quit()
 
 	#Translate the ARMS syntax into a dictionary
@@ -201,12 +202,12 @@ Please give options to select the type of file you'd like Armature to produce. Y
 		opt = opt[0]
 		for creator in creators:
 			#Write to a file if creator was requested in the command line options
-			if creator.CanCreate(opt):
+			if creator.can_create(opt):
 				#Get the save location
 				if len(args) > 2:
 					where_to_save = Path(f"{args[2]}/{file_to_parse.stem}{creator.file_extension}")
 				else:
 					where_to_save = Path(f"./{file_to_parse.stem}{creator.file_extension}")
-				where_to_save.write_text(creator.CreateFile(arms))
+				where_to_save.write_text(creator.create_file(arms))
 
 main()
