@@ -40,6 +40,7 @@ class SdfCreator(IArmsCreator.IArmsCreator):
                 for thing in self.__arms[group_of_things]:
                     #link variables
                     name = ah.get_required_value(thing, ArmsValue.name.value)
+                    position = thing[ArmsValue.position.value]
                     if ah.shape_is_root(name, self.__arms):
                         new_model = f"""
     <model name='model_{name}'>
@@ -60,19 +61,20 @@ class SdfCreator(IArmsCreator.IArmsCreator):
     def __create_joints_from(self, shape_name):
         result = ""
 
-        shape_joints = []
+        shape_joints = {}
 
         for group in self.__arms:
             if group in joints:
+                shape_joints[group] = []
                 for joint in self.__arms[group]:
                     if joint['parent'] == shape_name:
-                        shape_joints.append(joint)
-        
-        for joint in shape_joints:
-            axis = joint['axis']
-            position = joint['position']
-            result = f"""{result}
-    <joint name='{joint['name']}' type='revolute'>
+                        shape_joints[group].append(joint)
+        for group in shape_joints:
+            for joint in shape_joints[group]:
+                axis = joint['axis']
+                position = joint['position']
+                result = f"""{result}
+    <joint name='{joint['name']}' type='{group}'>
       <parent>{joint['parent']}</parent>
       <child>{joint['child']}</child>
       <pose frame=''>{position[0]} {position[1]} {position[2]} 0 -0 0</pose>
