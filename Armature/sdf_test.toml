@@ -4,7 +4,7 @@ name = "box_and_sphere"
 [[box]]
 name = "body"
 sides = [2.0, 1.0, 0.5]
-position = [0, 0, 5]
+position = [0, 0, 0]
 
 [[sphere]]
 name = "wheel1"
@@ -28,28 +28,28 @@ relative_position = [-1.0, 1.0, 0.0]
 
 [[revolute]]
 name = "rev_joint_1"
-axis = [1, 0, 0]
+axis = [0, 1, 0]
 relative_position = [0, 0, 0]
 parent = "body"
 child = "wheel1"
 
 [[revolute]]
 name = "rev_joint_2"
-axis = [1, 0, 0]
+axis = [0, 1, 0]
 relative_position = [0, 0, 0]
 parent = "body"
 child = "wheel2"
 
 [[revolute]]
 name = "rev_joint_3"
-axis = [1, 0, 0]
+axis = [0, 1, 0]
 relative_position = [0, 0, 0]
 parent = "body"
 child = "wheel3"
 
 [[revolute]]
 name = "rev_joint_4"
-axis = [1, 0, 0]
+axis = [0, 1, 0]
 relative_position = [0, 0, 0]
 parent = "body"
 child = "wheel4"
