@@ -1,9 +1,55 @@
-[[sphere]]
-name = "ball1"
-radius = 0.5
-position = [1.0, -0.5, 10.0]
+[[model]]
+name = "box_and_sphere"
 
 [[box]]
-name = "box1"
-sides = [0.25, 0.25, 0.25]
-position = [1.0, -0.5, 5.0]
+name = "body"
+sides = [2.0, 1.0, 0.5]
+position = [0, 0, 5]
+
+[[sphere]]
+name = "wheel1"
+radius = 0.5
+relative_position = [1.0, 1.0, 0.0]
+
+[[sphere]]
+name = "wheel2"
+radius = 0.5
+relative_position = [1.0, -1.0, 0.0]
+
+[[sphere]]
+name = "wheel3"
+radius = 0.5
+relative_position = [-1.0, -1.0, 0.0]
+
+[[sphere]]
+name = "wheel4"
+radius = 0.5
+relative_position = [-1.0, 1.0, 0.0]
+
+[[revolute]]
+name = "rev_joint_1"
+axis = [1, 0, 0]
+relative_position = [0, 0, 0]
+parent = "body"
+child = "wheel1"
+
+[[revolute]]
+name = "rev_joint_2"
+axis = [1, 0, 0]
+relative_position = [0, 0, 0]
+parent = "body"
+child = "wheel2"
+
+[[revolute]]
+name = "rev_joint_3"
+axis = [1, 0, 0]
+relative_position = [0, 0, 0]
+parent = "body"
+child = "wheel3"
+
+[[revolute]]
+name = "rev_joint_4"
+axis = [1, 0, 0]
+relative_position = [0, 0, 0]
+parent = "body"
+child = "wheel4"

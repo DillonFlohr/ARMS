@@ -1,4 +1,5 @@
 from enum import Enum
+import pdb
 
 class ArmsValue(Enum):
 	box = 'box'
@@ -19,7 +20,8 @@ shapes = {
 }
 
 joints = {
-	'ball_and_socket': 0
+	'ball_and_socket': 0,
+	'revolute': 0
 }
 
 def get_required_value(body, value):
@@ -55,11 +57,21 @@ def get_shape_by_name(target_name, armsDict):
 
 # A shape is a root unless there is a joint with that shape as a child
 def shape_is_root(shape_name, arms):
-	is_root = True
 	for joint_type in joints:
 		if joint_type in arms:
 			for joint in arms[joint_type]:
 				if (joint['child'] == shape_name):
-					is_root = False
+					return False
 					
-	return is_root
+	return True
+
+#Recursively get the children of some parent shape
+def get_children_of(parent_name, arms):
+	result = {}
+	for joint_type in joints:
+		if joint_type in arms:
+			for joint in arms[joint_type]:
+				if (joint['parent'] == parent_name):
+					result[joint['child']] = get_children_of(joint['child'], arms)
+
+	return result

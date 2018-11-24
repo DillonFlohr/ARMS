@@ -3,6 +3,7 @@ from Helpers import ArmsHelper as ah
 
 from pathlib import Path
 import re
+import pdb
 
 shapes = ah.shapes
 joints = ah.joints
@@ -11,6 +12,7 @@ ArmsValue = ah.ArmsValue
 class SdfCreator(IArmsCreator.IArmsCreator):
     def __init__(self):
         self.__arms = None
+        self.__models = None
 
     @property
     def file_extension(self):
@@ -25,31 +27,101 @@ class SdfCreator(IArmsCreator.IArmsCreator):
         template_path = Path("Creators/templates/flat_world.sdf")
         template_string = template_path.read_text()
 
+        self.__create_models()
+
         return template_string.format(
-            models = self.__create_models()
+            models = self.__models
         )
 
+    #actually only makes one model currently
     def __create_models(self):
-        result = ""
-
         for group_of_things in self.__arms:
             if group_of_things in shapes:
                 for thing in self.__arms[group_of_things]:
                     #link variables
                     name = ah.get_required_value(thing, ArmsValue.name.value)
-                    position = thing[ArmsValue.position.value]
-                    radius = None
-                    sides = None
-                    if group_of_things == 'sphere':
-                        radius = ah.get_required_value(thing, ArmsValue.radius.value)
-                        size = f"<radius>{radius}</radius>"
-                    elif group_of_things == 'box':
-                        sides = ah.get_required_value(thing, ArmsValue.sides.value)
-                        size = f"<size>{sides[0]} {sides[1]} {sides[2]}</size>"
-                    if ah.shape_is_root(thing, self.__arms):
+                    if ah.shape_is_root(name, self.__arms):
                         new_model = f"""
     <model name='model_{name}'>
-        <pose frame=''>{position[0]} {position[1]} {position[2]} 0 -0 0</pose>
+        {self.__create_link_text(thing)}
+        {self.__create_joints_from(name)}
+        {self.__create_child_links(ah.get_children_of(thing[ArmsValue.name.value], self.__arms))}
+    </model>
+    """
+                        self.__models = f'{self.__models}{new_model}'
+
+    def __create_child_links(self, children, result = ""):
+        for shape in children:
+            result = f'{result}{self.__create_link_text(ah.get_shape_by_name(shape, self.__arms))}'
+            result = self.__create_child_links(children[shape], result)
+
+        return result
+
+    def __create_joints_from(self, shape_name):
+        result = ""
+
+        shape_joints = []
+
+        for group in self.__arms:
+            if group in joints:
+                for joint in self.__arms[group]:
+                    if joint['parent'] == shape_name:
+                        shape_joints.append(joint)
+        
+        for joint in shape_joints:
+            axis = joint['axis']
+            position = joint['position']
+            result = f"""{result}
+    <joint name='{joint['name']}' type='revolute'>
+      <parent>{joint['parent']}</parent>
+      <child>{joint['child']}</child>
+      <pose frame=''>{position[0]} {position[1]} {position[2]} 0 -0 0</pose>
+      <axis>
+        <xyz>{axis[0]} {axis[1]} {axis[2]}</xyz>
+        <use_parent_model_frame>0</use_parent_model_frame>
+        <limit>
+          <lower>-1.79769e+308</lower>
+          <upper>1.79769e+308</upper>
+          <effort>-1</effort>
+          <velocity>-1</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+          <damping>0</damping>
+          <friction>0</friction>
+        </dynamics>
+      </axis>
+      <physics>
+        <ode>
+          <limit>
+            <cfm>0</cfm>
+            <erp>0.2</erp>
+          </limit>
+          <suspension>
+            <cfm>0</cfm>
+            <erp>0.2</erp>
+          </suspension>
+        </ode>
+      </physics>
+    </joint>
+        """
+
+        return result
+
+    def __create_link_text(self, shape):
+        name = ah.get_required_value(shape, ArmsValue.name.value)
+        position = shape[ArmsValue.position.value]
+        if ArmsValue.radius.value in shape:
+            shape_type = "sphere"
+            radius = ah.get_required_value(shape, ArmsValue.radius.value)
+            size = f"<radius>{radius}</radius>"
+        elif ArmsValue.sides.value in shape:
+            shape_type = "box"
+            sides = ah.get_required_value(shape, ArmsValue.sides.value)
+            size = f"<size>{sides[0]} {sides[1]} {sides[2]}</size>"
+        
+        return f"""
         <link name='{name}'>
             <inertial>
                 <mass>1</mass>
@@ -62,11 +134,12 @@ class SdfCreator(IArmsCreator.IArmsCreator):
                     <izz>0.1</izz>
                 </inertia>
             </inertial>
+            <pose frame=''>{position[0]} {position[1]} {position[2]} 0 -0 0</pose>
             <collision name='collision'>
                 <geometry>
-                    <{group_of_things}>
+                    <{shape_type}>
                         {size}
-                    </{group_of_things}>
+                    </{shape_type}>
                 </geometry>
                 <max_contacts>10</max_contacts>
                 <surface>
@@ -84,9 +157,9 @@ class SdfCreator(IArmsCreator.IArmsCreator):
             </collision>
             <visual name='visual'>
                 <geometry>
-                    <{group_of_things}>
+                    <{shape_type}>
                         {size}
-                    </{group_of_things}>
+                    </{shape_type}>
                 </geometry>
                 <material>
                     <script>
@@ -98,7 +171,4 @@ class SdfCreator(IArmsCreator.IArmsCreator):
             <self_collide>0</self_collide>
             <kinematic>0</kinematic>
         </link>
-    </model>
-    """
-                    result = f'{result}{new_model}'
-        return result
+        """

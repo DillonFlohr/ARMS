@@ -8,6 +8,7 @@ Please install toml to use Armature.py\n\
 	quit()
 import sys
 import pprint as pp
+import pdb
 from pathlib import Path
 from enum import Enum
 import copy
@@ -98,17 +99,6 @@ def convert_constants():
 								if (is_constant_call(item[value][i][0])):
 									item[value][i] = get_constant(item[value][i])
 
-#Recursively get the children of some parent shape
-def get_children_of(parent_name):
-	result = {}
-	for joint_type in joints:
-		if joint_type in arms:
-			for joint in arms[joint_type]:
-				if (joint['parent'] == parent_name):
-					result[joint['child']] = get_children_of(joint['child'])
-
-	return result
-
 def make_shape_positions_relative_to_parents():
 	#tree of parents and children
 	ancestor_tree = {}
@@ -121,7 +111,7 @@ def make_shape_positions_relative_to_parents():
 					ancestor_tree[shape[ArmsValue.name.value]] = {}
 
 	for root in ancestor_tree:
-		ancestor_tree[root] = get_children_of(root)
+		ancestor_tree[root] = ah.get_children_of(root, arms)
 
 	for root in ancestor_tree:
 		convert_shape_positions(root, ancestor_tree[root])
