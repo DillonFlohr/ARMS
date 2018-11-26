@@ -55,7 +55,7 @@ class SdfCreator(IArmsCreator.IArmsCreator):
         for shape in children:
             result = f'{result}{self.__create_link_text(ah.get_shape_by_name(shape, self.__arms))}'
             result = f'{result}{self.__create_joints_from(shape)}'
-            result = self.__create_child_links(children[shape], result)
+            result = f'{result}{self.__create_child_links(children[shape])}'
 
         return result
 
