@@ -54,10 +54,12 @@ class SdfCreator(IArmsCreator.IArmsCreator):
     def __create_child_links(self, children, result = ""):
         for shape in children:
             result = f'{result}{self.__create_link_text(ah.get_shape_by_name(shape, self.__arms))}'
+            result = f'{result}{self.__create_joints_from(shape)}'
             result = self.__create_child_links(children[shape], result)
 
         return result
 
+    #Creates all the joints that are from some shape.
     def __create_joints_from(self, shape_name):
         result = ""
 
@@ -71,13 +73,20 @@ class SdfCreator(IArmsCreator.IArmsCreator):
                         shape_joints[group].append(joint)
         for group in shape_joints:
             for joint in shape_joints[group]:
+                parent_position = ah.get_shape_by_name(joint['parent'], self.__arms)['position']
+                child_position = ah.get_shape_by_name(joint['child'], self.__arms)['position']
                 axis = joint['axis']
-                position = joint['position']
+                position = joint['relative_position']
+                
+                ###########################################################################################
+                # Gazebo parses the joints pose from the child link. Hence the [Parent - Child + position]#
+                # This puts the joint's position in the right place relative to the parent.               #
+                ###########################################################################################
                 result = f"""{result}
     <joint name='{joint['name']}' type='{group}'>
       <parent>{joint['parent']}</parent>
       <child>{joint['child']}</child>
-      <pose frame=''>{position[0]} {position[1]} {position[2]} 0 -0 0</pose>
+      <pose frame=''>{parent_position[0] - child_position[0] + position[0]} {parent_position[1] - child_position[1] + position[1]} {parent_position[2] - child_position[2] + position[2]} 0 -0 0</pose>
       <axis>
         <xyz>{axis[0]} {axis[1]} {axis[2]}</xyz>
         <use_parent_model_frame>0</use_parent_model_frame>
