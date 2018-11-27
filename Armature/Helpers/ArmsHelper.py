@@ -25,6 +25,10 @@ joints = {
 }
 
 def get_required_value(body, value):
+	#TODO: need to check if body is a string or a dictionary
+	#if a dict, procede as normal
+	#if not, call get_shape_by_name
+	#that way you can pass a shape name or a shape to this function
 	if value in body:
 		return body[value]
 	else:
@@ -40,6 +44,8 @@ def get_optional_value(body, value):
 	else:
 		if value == ArmsValue.color.value:
 			return [0, 0, 1]
+		if value == 'axis':
+			return [0, 0 0]
 
 def get_shape_by_name(target_name, armsDict):
 	result = None
