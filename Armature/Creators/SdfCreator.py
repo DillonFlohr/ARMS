@@ -72,7 +72,7 @@ class SdfCreator(IArmsCreator.IArmsCreator):
                         shape_joints[group].append(joint)
         for group in shape_joints:
             for joint in shape_joints[group]:
-		#change to get_required_value and pass in joint
+		#TODO: change to get_required_value and pass in joint
                 parent_position = ah.get_shape_by_name(joint['parent'], self.__arms)['position']
                 child_position = ah.get_shape_by_name(joint['child'], self.__arms)['position']
                 axis = ah.get_optional_value(joint, 'axis')
