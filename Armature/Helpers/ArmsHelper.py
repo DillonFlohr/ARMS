@@ -21,7 +21,8 @@ shapes = {
 
 joints = {
 	'ball_and_socket': 0,
-	'revolute': 0
+	'revolute': 0,
+	'prismatic': 0
 }
 
 def get_required_value(body, value):
@@ -45,7 +46,11 @@ def get_optional_value(body, value):
 		if value == ArmsValue.color.value:
 			return [0, 0, 1]
 		if value == 'axis':
-			return [0, 0 0]
+			return [0, 0, 0]
+		if value == 'lower_limit':
+			return -1.79769e+308
+		if value == 'upper_limit':
+			return 1.79769e+308
 
 def get_shape_by_name(target_name, armsDict):
 	result = None

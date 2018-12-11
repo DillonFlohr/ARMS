@@ -62,7 +62,7 @@ position = [0, 0, 0]
 [[box]]
 name = "box2"
 sides = [1.0, 1.0, 1.0]
-relative_position = [3, 3, 0]
+relative_position = [1, 1, 0]
 
 [[box]]
 name = "box3"

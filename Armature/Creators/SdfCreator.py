@@ -75,6 +75,8 @@ class SdfCreator(IArmsCreator.IArmsCreator):
 		#TODO: change to get_required_value and pass in joint
                 parent_position = ah.get_shape_by_name(joint['parent'], self.__arms)['position']
                 child_position = ah.get_shape_by_name(joint['child'], self.__arms)['position']
+                lower_limit = ah.get_optional_value(joint, 'lower_limit')
+                upper_limit = ah.get_optional_value(joint, 'upper_limit')
                 axis = ah.get_optional_value(joint, 'axis')
                 position = joint['relative_position']
                 
@@ -91,8 +93,8 @@ class SdfCreator(IArmsCreator.IArmsCreator):
         <xyz>{axis[0]} {axis[1]} {axis[2]}</xyz>
         <use_parent_model_frame>0</use_parent_model_frame>
         <limit>
-          <lower>-1.79769e+308</lower>
-          <upper>1.79769e+308</upper>
+          <lower>{lower_limit}</lower>
+          <upper>{upper_limit}</upper>
           <effort>-1</effort>
           <velocity>-1</velocity>
         </limit>

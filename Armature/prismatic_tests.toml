@@ -1,0 +1,18 @@
+[[box]]
+name = "box1"
+sides = [1.0, 1.0, 1.0]
+position = [0, 0, 0]
+
+[[box]]
+name = "box2"
+sides = [1.0, 1.0, 1.0]
+relative_position = [2, 0, 0]
+
+[[prismatic]]
+name = "pris_joint_1"
+axis = [1, 0, 0]
+relative_position = [1.0, 0.0, 0.0]
+parent = "box1"
+child = "box2"
+upper_limit = 0.5
+lower_limit = -0.5
