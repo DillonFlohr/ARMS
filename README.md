@@ -27,11 +27,12 @@ The first environment ARMS will target is the Open Dynamics Engine. https://bitb
 
     You can put any .cpp file genterated by Armature into an ODE demo's associated .cpp file to see the results of a ARMS file.
 
-## Export Options for v0.6.9 or later:
+## Export Options for v0.7.0 or later:
 Below are the currently supported export options.
 
 > --drawstuff
-# Syntax Specification v0.6.9
+> --sdf
+# Syntax Specification v0.7.0
 Below is a list of configurations currently supported by ARMS
 
 
@@ -64,6 +65,29 @@ parent = "ball" #parent shape's name
 child = "box" #child shape's name
 relative_position = [0.0, 1.0, -1.0] #This position is relative to the parent
 ```
+
+### Currently, the following joints are only supported in SDF.
+
+```
+[[revolute]]
+name = "rev_joint_1"
+axis = [0, 1, 0]
+relative_position = [1, 0, 0]
+parent = "body"
+child = "wheel1"
+```
+
+```
+[[prismatic]]
+name = "pris_joint_1"
+axis = [1, 0, 0]
+relative_position = [1.0, 0.0, 0.0]
+parent = "box1"
+child = "box2"
+upper_limit = 0.5
+lower_limit = -0.5
+```
+
 Note that a joint's relative positon is relative to the parent shape.
 
 As of v0.5.7, when a shape is a child, it requires the relative_position attribute. This may change to having 'position' automatically be the relative position and a 'is_child' attribute required in future versions of ARMS.

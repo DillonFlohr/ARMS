@@ -1,149 +1,55 @@
-# [[model]]
-# name = "box_and_sphere"
-
-# [[box]]
-# name = "body"
-# sides = [2.0, 1.0, 0.5]
-# position = [0, 0, 0]
-
-# [[sphere]]
-# name = "wheel1"
-# radius = 0.5
-# relative_position = [1.0, 1.0, 0.0]
-
-# [[sphere]]
-# name = "wheel2"
-# radius = 0.5
-# relative_position = [1.0, -1.0, 0.0]
-
-# [[sphere]]
-# name = "wheel3"
-# radius = 0.5
-# relative_position = [-1.0, -1.0, 0.0]
-
-# [[sphere]]
-# name = "wheel4"
-# radius = 0.5
-# relative_position = [-1.0, 1.0, 0.0]
-
-# [[revolute]]
-# name = "rev_joint_1"
-# axis = [0, 1, 0]
-# relative_position = [0, 0, 0]
-# parent = "body"
-# child = "wheel1"
-
-# [[revolute]]
-# name = "rev_joint_2"
-# axis = [0, 1, 0]
-# relative_position = [0, 0, 0]
-# parent = "body"
-# child = "wheel2"
-
-# [[revolute]]
-# name = "rev_joint_3"
-# axis = [0, 1, 0]
-# relative_position = [0, 0, 0]
-# parent = "body"
-# child = "wheel3"
-
-# [[revolute]]
-# name = "rev_joint_4"
-# axis = [0, 1, 0]
-# relative_position = [0, 0, 0]
-# parent = "body"
-# child = "wheel4"
+[[model]]
+name = "box_and_sphere"
 
 [[box]]
-name = "box1"
-sides = [1.0, 1.0, 1.0]
+name = "body"
+sides = [2.0, 1.0, 0.5]
 position = [0, 0, 0]
 
-[[box]]
-name = "box2"
-sides = [1.0, 1.0, 1.0]
-relative_position = [1, 1, 0]
+[[sphere]]
+name = "wheel1"
+radius = 0.5
+relative_position = [1.0, 1.0, 0.0]
 
-[[box]]
-name = "box3"
-sides = [1.0, 1.0, 1.0]
-relative_position = [1, 1, 0]
+[[sphere]]
+name = "wheel2"
+radius = 0.5
+relative_position = [1.0, -1.0, 0.0]
 
-[[box]]
-name = "box4"
-sides = [1.0, 1.0, 1.0]
-relative_position = [1, 1, 0]
+[[sphere]]
+name = "wheel3"
+radius = 0.5
+relative_position = [-1.0, -1.0, 0.0]
+
+[[sphere]]
+name = "wheel4"
+radius = 0.5
+relative_position = [-1.0, 1.0, 0.0]
 
 [[revolute]]
 name = "rev_joint_1"
-axis = [0, 0, 1]
-relative_position = [1.0, 1.0, 0.0]
-parent = "box1"
-child = "box2"
+axis = [0, 1, 0]
+relative_position = [1, 0, 0]
+parent = "body"
+child = "wheel1"
 
 [[revolute]]
 name = "rev_joint_2"
-axis = [0, 0, 1]
-relative_position = [0.5, 0.5, 0.0]
-parent = "box2"
-child = "box3"
+axis = [0, 1, 0]
+relative_position = [1, 0, 0]
+parent = "body"
+child = "wheel2"
 
 [[revolute]]
 name = "rev_joint_3"
-axis = [0, 0, 1]
-relative_position = [0.5, 0.5, 0.0]
-parent = "box3"
-child = "box4"
+axis = [0, 1, 0]
+relative_position = [-1, 0, 0]
+parent = "body"
+child = "wheel3"
 
-# [[box]]
-# name = "body2"
-# sides = [2.0, 1.0, 0.5]
-# position = [10, 0, 0]
-
-# [[sphere]]
-# name = "wheel12"
-# radius = 0.5
-# relative_position = [1.0, 1.0, 0.0]
-
-# [[sphere]]
-# name = "wheel22"
-# radius = 0.5
-# relative_position = [1.0, -1.0, 0.0]
-
-# [[sphere]]
-# name = "wheel32"
-# radius = 0.5
-# relative_position = [-1.0, -1.0, 0.0]
-
-# [[sphere]]
-# name = "wheel42"
-# radius = 0.5
-# relative_position = [-1.0, 1.0, 0.0]
-
-# [[revolute]]
-# name = "rev_joint_12"
-# axis = [0, 1, 0]
-# relative_position = [0, 0, 0]
-# parent = "body2"
-# child = "wheel12"
-
-# [[revolute]]
-# name = "rev_joint_22"
-# axis = [0, 1, 0]
-# relative_position = [0, 0, 0]
-# parent = "body2"
-# child = "wheel22"
-
-# [[revolute]]
-# name = "rev_joint_32"
-# axis = [0, 1, 0]
-# relative_position = [0, 0, 0]
-# parent = "body2"
-# child = "wheel32"
-
-# [[revolute]]
-# name = "rev_joint_42"
-# axis = [0, 1, 0]
-# relative_position = [0, 0, 0]
-# parent = "body2"
-# child = "wheel42"
+[[revolute]]
+name = "rev_joint_4"
+axis = [0, 1, 0]
+relative_position = [-1, 0, 0]
+parent = "body"
+child = "wheel4"
